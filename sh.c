@@ -125,6 +125,27 @@ int main(void)
 					}
 					args[cnt1] = 0;
 				}
+				else if(!strcmp(args[cnt1], "|"))
+				{
+					int in = 0, fd[2];
+					if(args[cnt1] != NULL)
+					{
+						pipe(fd);
+						pid_t pid1;
+						if (in != 0)
+			        	{
+       						dup2 (in, 0);
+							close (in);
+						}
+
+						if (fd[1] != 1)
+						{
+							dup2 (fd[1], 1);
+							close (fd[1]);
+						}
+					}
+					args[cnt1] = 0;
+				}
 				cnt1++;
 			}
 			execvp(args[0],args);
